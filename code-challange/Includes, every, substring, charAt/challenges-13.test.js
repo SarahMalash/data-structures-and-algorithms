@@ -9,11 +9,9 @@ For example, ['this is great :)', 'wow', 'whyyyyyy :(', ':)))))'] returns ['t', 
 ------------------------------------------------------------------------------------------------ */
 
 const firstLetters = (arr) => {
-  let arr1 = [];
-  arr.forEach(element => {
-    arr1.push(element.substring(0,1));
-  });
-  return arr1;
+  return arr.map(string => {return string.charAt(0)});
+
+
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -25,9 +23,9 @@ For example, ['this is great :)', 'wow', 'whyyyyyy :(', ':)))))'] returns ['this
 ------------------------------------------------------------------------------------------------ */
 
 const findHappiness = (arr) => {
-  let regex = /:\)/;
-  let findHappinessStrings = arr.filter(string => regex.test(string));
-  return findHappinessStrings;
+  return arr.filter(str => {
+    return str.includes(':)');
+  })
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -40,11 +38,15 @@ For example, (123) 456-7890 returns 1234567890
 
 const standardizePhoneNumbers = (arr) => {
 
-  let numbers = arr.map(number => {
-    let matchyMatch = number.replace(/[^\d]/g,'');
-    return matchyMatch;
+  return arr.map(num => {
+    let format = '';
+    for (let i in num) {
+      if (parseInt(num.charAt(i)) || num.charAt(i) === '0'){
+        format+= num.charAt(i);
+      }
+    }
+    return format;
   })
-  return numbers
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -56,14 +58,13 @@ For example, 'abcdefg' returns 'bdf'
 ------------------------------------------------------------------------------------------------ */
 
 const onlyOddChars = (str) => {
-  let arr1 = str.split('');
-  let result = '';
-  arr1.map((element,index) => {
-    if (index % 2 !== 0) {
-      result += element;
+  let odds = '';
+  for (let x in str){
+    if (x % 2){
+      odds += str.charAt(x);
     }
-  });
-  return result;
+  }
+  return odds;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -74,13 +75,11 @@ Write a function named allHappy that takes in an array of strings and returns a 
 
 const allHappy = (arr) => {
 
-  let allStrings = true;
-  arr.map((string,index) => {
-    if (string.indexOf(':)') === -1) {
-      allStrings = false;
-    }
+  let sum = 0;
+  arr.forEach(str => {
+    if (str.includes(':)')) sum++;
   })
-  return allStrings;
+  return sum === arr.length;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -90,7 +89,9 @@ Write a function named findAnything that takes in an array of strings, along wit
 ------------------------------------------------------------------------------------------------ */
 
 const findAnything = (arr, target) => {
-  // Solution code here...
+  return arr.filter(str => {
+    return str.includes(target);
+  })
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -100,7 +101,10 @@ Write a function named findEvery that takes in an array of strings, along with a
 ------------------------------------------------------------------------------------------------ */
 
 const findEvery = (arr, target) => {
-  // Solution code here...
+  return arr.reduce((acc, str) => {
+    if (str.includes(target)) acc++;
+    return acc;
+  }, 0) === arr.length;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -116,7 +120,11 @@ For example, [['Brook Testing', 'Actual Person'], ['Human Person', 'Brook again'
 ------------------------------------------------------------------------------------------------ */
 
 const unenrollBrook = (arr) => {
-  // Solution code here...
+  return arr.map(course => {
+    return course.filter(name => {
+      return !name.includes('Brook');
+    })
+  })
 };
 
 /* ------------------------------------------------------------------------------------------------
